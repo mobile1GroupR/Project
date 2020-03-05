@@ -3,7 +3,7 @@ package com.example.mobilelocker;
 public class Password {
 
     private static String password;
-    public static final int maxChars=4;
+    public static final int length=4;
 
     public static String getPassword() {
         return password;

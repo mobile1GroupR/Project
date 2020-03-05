@@ -15,6 +15,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
 
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
+    public static final String SYMBOLS = "SYMBOLS";
     private Button btn1;
     private Button btn2;
     private Button btn3;
@@ -32,6 +33,8 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
     Button btnClear;
 
     SharedPreferences save;
+
+    String currentSymbols;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +63,15 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         setBtns();
     }
     public void btnConfirmClick(View view){
-        Log.i("LOG","Btn Confirm clicked. CurrentPassword: "+inputPassword);
-        SharedPreferences.Editor editor = save.edit();
-        editor.putString(PASSWORD,inputPassword);
-        editor.commit();
+        if (inputPassword.length()==Password.length){
+            Log.i("LOG","Btn Confirm clicked. CurrentPassword: "+inputPassword);
+            SharedPreferences.Editor editor = save.edit();
+            editor.putString(PASSWORD,inputPassword);
+            editor.commit();
+        }
+        else{
+            Log.i("LOG","Btn Confirm clicked. Password not saved. CurrentPassword: " + inputPassword);
+        }
 
     }
 
@@ -74,7 +82,11 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         Log.i("LOG","Btn Clear clicked. CurrentPassword: "+inputPassword);
     }
     public void setBtns(){
-        ArrayList s = CurrentSymbols.getCurrent();
+        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+        ArrayList s = new ArrayList();
+        for (int i=0;i<currentSymbols.length();i++){
+            s.add(currentSymbols.charAt(i)+"");
+        }
         Log.i("LOG",s.toString());
 
         btn1.setText(s.get(0).toString());
@@ -100,7 +112,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.maxChars){
+        if (inputPassword.length()<Password.length){
             switch (v.getId()){
                 case R.id.btn1:
                     inputPassword +=btn1.getText().toString();

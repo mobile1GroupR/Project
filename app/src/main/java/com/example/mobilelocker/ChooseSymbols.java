@@ -13,6 +13,7 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
 
 
     public static final String SAVE = "SAVE";
+    public static final String SYMBOLS = "SYMBOLS";
     private Button btnChooseGreek;
     private Button btnChooseChessandcard;
 
@@ -39,15 +40,18 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
     }
 
     public void btnChooseClick(View view){
+        SharedPreferences.Editor editor =  save.edit();
         switch (id){
             case 0:
-                CurrentSymbols.setCurrentGreek();
+                editor.putString(SYMBOLS,CurrentSymbols.greekSymbols);
+                editor.commit();
                 break;
             case 1:
-                CurrentSymbols.setCurrentChessandcard();
+                editor.putString(SYMBOLS,CurrentSymbols.chessandcardSymbols);
+                editor.commit();
                 break;
         }
-        Log.i("LOG","Btn Choose clicked. Current symbold id: " + id);
+        Log.i("LOG","Btn Choose clicked. Current symbols: " + save.getString(SYMBOLS,""));
 
     }
 

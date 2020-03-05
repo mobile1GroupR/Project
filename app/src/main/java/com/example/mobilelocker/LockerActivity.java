@@ -18,6 +18,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
+    public static final String SYMBOLS = "SYMBOLS";
 
     private Button btn1;
     private Button btn2;
@@ -33,6 +34,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences save;
 
     private String inputPassword;
+    String currentSymbols;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +51,33 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
 
+
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+
         tvInput = findViewById(R.id.lockerActivityInputTextView);
         inputPassword="";
 
         save  =getSharedPreferences(SAVE,MODE_PRIVATE);
-        String s = save.getString(PASSWORD,""   );
+        String s = save.getString(PASSWORD,"");
         Log.i("LOG","CURRENT PASSWORD: "+s);
 
         shuffle();
     }
 
     public void shuffle(){
-        ArrayList s = CurrentSymbols.getCurrent();
+        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+        ArrayList s = new ArrayList();
+        for (int i=0;i<currentSymbols.length();i++){
+            s.add(currentSymbols.charAt(i)+"");
+        }
         Log.i("LOG",s.toString());
         Collections.shuffle(s);
         Log.i("LOG", s.toString());
@@ -74,26 +91,28 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         btn7.setText(s.get(6).toString());
         btn8.setText(s.get(7).toString());
         btn9.setText(s.get(8).toString());
-        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-        btn3.setOnClickListener(this);
-        btn4.setOnClickListener(this);
-        btn5.setOnClickListener(this);
-        btn6.setOnClickListener(this);
-        btn7.setOnClickListener(this);
-        btn8.setOnClickListener(this);
-        btn9.setOnClickListener(this);
     }
 
     public void checkPassword(){
-        if (inputPassword.length()>=Password.maxChars){
-            //tTESTTEST@2
+        if (inputPassword.compareTo(save.getString(PASSWORD,""))==0){
+            Log.i("LOG", "Correct Password ");
+           Intent intent = new Intent(this,MainActivity.class);
+           startActivity(intent);
         }
+        else{
+            Log.i("LOG", "Incorrect Password ");
+            clear();
+
+        }
+    }
+    public void clear(){
+        inputPassword="";
+        tvInput.setText("");
     }
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.maxChars){
+        if (inputPassword.length()<Password.length){
             switch (v.getId()){
                 case R.id.btn1:
                     inputPassword +=btn1.getText().toString();
@@ -123,6 +142,9 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
                     inputPassword +=btn9.getText().toString();
                     break;
             }
+        }
+        if (inputPassword.length()==Password.length){
+            checkPassword();
         }
         tvInput.setText(inputPassword);
     }
