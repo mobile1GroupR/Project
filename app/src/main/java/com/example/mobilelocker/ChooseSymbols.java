@@ -2,6 +2,7 @@ package com.example.mobilelocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,8 +51,14 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
                 editor.putString(SYMBOLS,CurrentSymbols.chessandcardSymbols);
                 editor.commit();
                 break;
+            default:
+                Log.i("LOG","Invalid Id");
+                    return;
         }
         Log.i("LOG","Btn Choose clicked. Current symbols: " + save.getString(SYMBOLS,""));
+
+        Intent intent = new Intent(this,SetPasswordActivity.class);
+        startActivity(intent);
 
     }
 

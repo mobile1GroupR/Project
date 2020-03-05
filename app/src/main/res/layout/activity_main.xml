@@ -6,27 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/setPasswordBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Set Password"
-
-        android:onClick="btnSetPasswordClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/what"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Choose symbols"
         android:onClick="btnChooseSymbolsClick"
+        android:text="Set Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setPasswordBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/testBtn"
