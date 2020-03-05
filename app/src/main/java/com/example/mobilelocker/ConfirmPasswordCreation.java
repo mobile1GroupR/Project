@@ -149,9 +149,10 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
                     break;
             }
         }
+        tvInput.append("●");
         if (inputPassword.length()==Password.length){
             checkPassword();
         }
-        tvInput.append("●");
+
     }
 }

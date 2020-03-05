@@ -14,11 +14,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LockerActivity extends AppCompatActivity implements View.OnClickListener{
+public class LockerActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
+    public static final String ENTER_CHANGE_PASSWORD = "ENTER_CHANGE_PASSWORD";
 
     private Button btn1;
     private Button btn2;
@@ -35,6 +36,8 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
     private String inputPassword;
     String currentSymbols;
+
+    boolean changePassword = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,22 +66,24 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         btn9.setOnClickListener(this);
 
         tvInput = findViewById(R.id.lockerActivityInputTextView);
-        inputPassword="";
+        inputPassword = "";
 
-        save  =getSharedPreferences(SAVE,MODE_PRIVATE);
-        String s = save.getString(PASSWORD,"");
-        Log.i("LOG","CURRENT PASSWORD: "+s);
+        save = getSharedPreferences(SAVE, MODE_PRIVATE);
+        String s = save.getString(PASSWORD, "");
+        Log.i("LOG", "CURRENT PASSWORD: " + s);
+
+        changePassword = getIntent().getBooleanExtra(ENTER_CHANGE_PASSWORD, false);
 
         shuffle();
     }
 
-    public void shuffle(){
-        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+    public void shuffle() {
+        currentSymbols = save.getString(SYMBOLS, CurrentSymbols.greekSymbols);
         ArrayList s = new ArrayList();
-        for (int i=0;i<currentSymbols.length();i++){
-            s.add(currentSymbols.charAt(i)+"");
+        for (int i = 0; i < currentSymbols.length(); i++) {
+            s.add(currentSymbols.charAt(i) + "");
         }
-        Log.i("LOG",s.toString());
+        Log.i("LOG", s.toString());
         Collections.shuffle(s);
         Log.i("LOG", s.toString());
 
@@ -93,60 +98,70 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         btn9.setText(s.get(8).toString());
     }
 
-    public void checkPassword(){
-        if (inputPassword.compareTo(save.getString(PASSWORD,""))==0){
+    public void checkPassword() {
+        if (inputPassword.compareTo(save.getString(PASSWORD, "")) == 0) {
             Log.i("LOG", "Correct Password ");
-           Intent intent = new Intent(this,MainActivity.class);
-           startActivity(intent);
-        }
-        else{
+            if (changePassword) {
+                Intent intent = new Intent(this,ChooseSymbols.class);
+                startActivity(intent);
+            } else {
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+        } else {
             Log.i("LOG", "Incorrect Password ");
             clear();
 
         }
     }
-    public void clear(){
-        inputPassword="";
+
+    public void clear() {
+        inputPassword = "";
         tvInput.setText("");
     }
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.length){
-            switch (v.getId()){
+        if (inputPassword.length() < Password.length) {
+            switch (v.getId()) {
                 case R.id.btn1:
-                    inputPassword +=btn1.getText().toString();
+                    inputPassword += btn1.getText().toString();
                     break;
                 case R.id.btn2:
-                    inputPassword +=btn2.getText().toString();
+                    inputPassword += btn2.getText().toString();
                     break;
                 case R.id.btn3:
-                    inputPassword +=btn3.getText().toString();
+                    inputPassword += btn3.getText().toString();
                     break;
                 case R.id.btn4:
-                    inputPassword +=btn4.getText().toString();
+                    inputPassword += btn4.getText().toString();
                     break;
                 case R.id.btn5:
-                    inputPassword +=btn5.getText().toString();
+                    inputPassword += btn5.getText().toString();
                     break;
                 case R.id.btn6:
-                    inputPassword +=btn6.getText().toString();
+                    inputPassword += btn6.getText().toString();
                     break;
                 case R.id.btn7:
-                    inputPassword +=btn7.getText().toString();
+                    inputPassword += btn7.getText().toString();
                     break;
                 case R.id.btn8:
-                    inputPassword +=btn8.getText().toString();
+                    inputPassword += btn8.getText().toString();
                     break;
                 case R.id.btn9:
-                    inputPassword +=btn9.getText().toString();
+                    inputPassword += btn9.getText().toString();
                     break;
             }
         }
-        if (inputPassword.length()==Password.length){
+        tvInput.append("●");
+        if (inputPassword.length() == Password.length) {
             checkPassword();
         }
-        tvInput.append("●");
+
+
+
+
 
     }
 }
