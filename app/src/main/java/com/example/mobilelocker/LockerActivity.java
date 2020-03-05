@@ -146,6 +146,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         if (inputPassword.length()==Password.length){
             checkPassword();
         }
-        tvInput.setText(inputPassword);
+        tvInput.append("●");
+
     }
 }

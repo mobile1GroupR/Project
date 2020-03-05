@@ -24,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnChooseSymbolsClick(View view){
-        Intent intent = new Intent(this,ChooseSymbols.class);
-        startActivity(intent);
+        if (Password.hasPassword==false) {
+            Intent intent = new Intent(this, ChooseSymbols.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent();
+            startActivity(intent);
+        }
     }
     public void lockerClick(View view){
         Intent intent = new Intent(this, LockerActivity.class);

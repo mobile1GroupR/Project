@@ -68,7 +68,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
 
         save  = getSharedPreferences(SAVE,MODE_PRIVATE);
         confirmPassword = getIntent().getStringExtra(CONFIRM_PASSWORD);
-        Log.i("LOG","CONFIRM, CURRENT PASSWORD: "+confirmPassword);
+        Log.i("LOG","CONFIRM PASSWORD, CURRENT PASSWORD: "+confirmPassword);
 
         shuffle();
     }
@@ -97,12 +97,16 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
     public void checkPassword(){
         if (inputPassword.compareTo(confirmPassword)==0){
             Log.i("LOG", "Correct Password ");
+            SharedPreferences.Editor editor = save.edit();
+            editor.putString(PASSWORD,confirmPassword);
+            editor.commit();
+            Password.hasPassword=true;
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }
         else{
             Log.i("LOG", "Incorrect Password ");
-            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Incorrect Password. Try again.", Toast.LENGTH_SHORT).show();
             clear();
 
         }
@@ -148,6 +152,6 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
         if (inputPassword.length()==Password.length){
             checkPassword();
         }
-        tvInput.setText(inputPassword);
+        tvInput.append("●");
     }
 }
