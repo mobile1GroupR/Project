@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnSetPassword = findViewById(R.id.setPasswordBtn);
         //Save Current Symbols sda
-        //asdasdasdasd
+        //asdasdasdasdTEst
     }
 
     public void btnSetPasswordClick(View view){
