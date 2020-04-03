@@ -21,6 +21,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
     public static final String SYMBOLS = "SYMBOLS";
     public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
     public static final String CONFIRM_PASSWORD = "CONFIRM_PASSWORD";
+    public static final String PASSWORD_SIZE ="PASSWORD_SIZE";
 
     private Button btn1;
     private Button btn2;
@@ -121,7 +122,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.length){
+        if (inputPassword.length()<Password.maxLength){
             switch (v.getId()){
                 case R.id.btn1:
                     inputPassword +=btn1.getText().toString();
@@ -153,9 +154,14 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
             }
         }
         tvInput.append("●");
-        if (inputPassword.length()==Password.length){
+        int size = save.getInt(PASSWORD_SIZE,0);
+        if (inputPassword.length() == size) {
+            if (size==0){
+                finish();
+            }
             checkPassword();
         }
+
 
     }
 }

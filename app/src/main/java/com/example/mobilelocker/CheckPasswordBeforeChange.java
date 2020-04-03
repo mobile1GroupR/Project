@@ -20,6 +20,7 @@ public class CheckPasswordBeforeChange extends AppCompatActivity implements View
     public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
     public static final String CONFIRM_PASSWORD = "CONFIRM_PASSWORD";
+    public static final String PASSWORD_SIZE ="PASSWORD_SIZE";
 
     private Button btn1;
     private Button btn2;
@@ -113,7 +114,7 @@ public class CheckPasswordBeforeChange extends AppCompatActivity implements View
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.length){
+        if (inputPassword.length()<Password.maxLength){
             switch (v.getId()){
                 case R.id.btn1:
                     inputPassword +=btn1.getText().toString();
@@ -145,7 +146,11 @@ public class CheckPasswordBeforeChange extends AppCompatActivity implements View
             }
         }
         tvInput.append("●");
-        if (inputPassword.length()==Password.length){
+        int size = save.getInt(PASSWORD_SIZE,0);
+        if (inputPassword.length() == size) {
+            if (size==0){
+                finish();
+            }
             checkPassword();
         }
 

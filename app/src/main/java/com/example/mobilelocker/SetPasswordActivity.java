@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
     public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
     public static final String SYMBOLS = "SYMBOLS";
     public static final String CONFIRM_PASSWORD = "CONFIRM_PASSWORD";
+    public static final String PASSWORD_SIZE ="PASSWORD_SIZE";
     private Button btn1;
     private Button btn2;
     private Button btn3;
@@ -65,15 +67,18 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         setBtns();
     }
     public void btnConfirmClick(View view){
-        if (inputPassword.length()==Password.length){
+        if (inputPassword.length()>=2 && inputPassword.length()<=Password.maxLength){
             Log.i("LOG","Btn Confirm clicked. CurrentPassword: "+inputPassword);
-
+            SharedPreferences.Editor editor = save.edit();
+            editor.putInt(PASSWORD_SIZE,inputPassword.length());
+            editor.commit();
             Intent intent = new Intent(this,ConfirmPasswordCreation.class);
             intent.putExtra(CONFIRM_PASSWORD,inputPassword);
             startActivity(intent);
         }
         else{
             Log.i("LOG","Btn Confirm clicked. Password not saved. CurrentPassword: " + inputPassword);
+            Toast.makeText(this, "Password length is invalid", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -115,7 +120,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length()<Password.length){
+        if (inputPassword.length()<Password.maxLength){
             switch (v.getId()){
                 case R.id.btn1:
                     inputPassword +=btn1.getText().toString();

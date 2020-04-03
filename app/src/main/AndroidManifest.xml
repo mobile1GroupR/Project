@@ -19,7 +19,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Settings" />
         <activity android:name=".ConfirmPasswordCreation" />
         <activity android:name=".SetPasswordActivity" />
         <activity android:name=".ChooseSymbols" />

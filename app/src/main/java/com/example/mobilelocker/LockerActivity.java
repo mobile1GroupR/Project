@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
+    public static final String PASSWORD_SIZE ="PASSWORD_SIZE";
 
     private Button btn1;
     private Button btn2;
@@ -116,7 +118,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
         super.onResume();
         View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE;
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
         super.onUserInteraction();
 
@@ -132,7 +134,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public void onUserInteraction() {
         super.onUserInteraction();
         View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE;
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
 
     }
@@ -166,12 +168,12 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
                 Intent intent = new Intent(this,ChooseSymbols.class);
                 startActivity(intent);
             } else {
-
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
         } else {
             Log.i("LOG", "Incorrect Password ");
+            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
             clear();
 
         }
@@ -184,7 +186,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (inputPassword.length() < Password.length) {
+        if (inputPassword.length() < Password.maxLength) {
             switch (v.getId()) {
                 case R.id.btn1:
                     inputPassword += btn1.getText().toString();
@@ -216,7 +218,11 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         tvInput.append("●");
-        if (inputPassword.length() == Password.length) {
+        int size = save.getInt(PASSWORD_SIZE,0);
+        if (inputPassword.length() == size) {
+            if (size==0){
+                finish();
+            }
             checkPassword();
         }
 
