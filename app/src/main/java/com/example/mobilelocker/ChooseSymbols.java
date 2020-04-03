@@ -40,6 +40,11 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
+
     public void btnChooseClick(View view){
         SharedPreferences.Editor editor =  save.edit();
         switch (id){

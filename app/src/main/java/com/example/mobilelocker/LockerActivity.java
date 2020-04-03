@@ -7,12 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+
 
 public class LockerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,6 +44,10 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
+                + WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
+                + WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locker);
 
@@ -53,7 +60,6 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         btn7 = findViewById(R.id.btn7);
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
-
 
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -75,6 +81,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         changePassword = getIntent().getBooleanExtra(ENTER_CHANGE_PASSWORD, false);
 
         shuffle();
+
     }
 
     public void shuffle() {
@@ -160,8 +167,6 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
-
-
     }
 }
+
