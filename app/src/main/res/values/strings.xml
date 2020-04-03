@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">mobileLocker</string>
+    <string name="time_hh_mm">TIME HH:MM</string>
+    <string name="greek2">ξ</string>
+    <string name="greek1">λ</string>
+    <string name="greek3">ζ</string>
+    <string name="greek4">σ</string>
+    <string name="greek5">φ</string>
+    <string name="greek6">ψ</string>
+    <string name="greek7">γ</string>
+    <string name="greek8">μ</string>
+    <string name="greek9">δ</string>
 </resources>

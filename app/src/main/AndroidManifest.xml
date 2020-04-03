@@ -24,8 +24,7 @@
         <activity android:name=".ConfirmPasswordCreation" />
         <activity android:name=".SetPasswordActivity" />
         <activity android:name=".ChooseSymbols" />
-        <activity android:name=".LockerActivity">
-        </activity>
+        <activity android:name=".LockerActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

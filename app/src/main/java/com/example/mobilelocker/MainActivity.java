@@ -40,14 +40,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnChooseSymbolsClick(View view){
-        if (save.getString(PASSWORD,"").length()==Password.length) {
-
-            Intent intent = new Intent(this,LockerActivity.class);
-            intent.putExtra(ENTER_CHANGE_PASSWORD,true);
+        if (save.getString(PASSWORD,"").equals("")) {
+            Intent intent = new Intent(this, ChooseSymbols.class);
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(this, ChooseSymbols.class);
+            Intent intent = new Intent(this,LockerActivity.class);
+            intent.putExtra(ENTER_CHANGE_PASSWORD,true);
             startActivity(intent);
         }
     }

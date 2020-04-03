@@ -34,7 +34,6 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
-    public static final String ENTER_CHANGE_PASSWORD = "ENTER_CHANGE_PASSWORD";
 
     private Button btn1;
     private Button btn2;
@@ -48,6 +47,8 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tvInput;
 
     private TextView hoursAndMins;
+    private TextView monthAndDay;
+
     SharedPreferences save;
 
     private String inputPassword;
@@ -56,16 +57,16 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     boolean changePassword = false;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                + WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
-                + WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
-                + WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locker);
 
+        //set time
+        hoursAndMins = findViewById(R.id.hoursAndMinsTextView);
+        monthAndDay = findViewById(R.id.monthAndDayTextView);
+        setTime();
+        //set time end
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
@@ -89,29 +90,37 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         tvInput = findViewById(R.id.lockerActivityInputTextView);
         inputPassword = "";
 
-        hoursAndMins = findViewById(R.id.hoursAndMinsTextView);
-
         save = getSharedPreferences(SAVE, MODE_PRIVATE);
         String s = save.getString(PASSWORD, "");
         Log.i("LOG", "CURRENT PASSWORD: " + s);
 
-        getHoursAndMins();
+
         clear();
         shuffle();
 
     }
 
-    public void getHoursAndMins(){
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String date = df.format(Calendar.getInstance().getTime());
-        hoursAndMins.setText(date);
+    public void setTime(){
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         getHoursAndMins();
+                        getMonthAndDay();
                     }
                 }, 1000);
     }
+    public void getHoursAndMins(){
+        DateFormat df = new SimpleDateFormat("h:mm a");
+        String date = df.format(Calendar.getInstance().getTime());
+        hoursAndMins.setText(date);
+
+    }
+    public void getMonthAndDay(){
+        DateFormat df = new SimpleDateFormat("EEE, d MMM");
+        String date = df.format(Calendar.getInstance().getTime());
+        monthAndDay.setText(date);
+    }
+
 
 
     @Override
