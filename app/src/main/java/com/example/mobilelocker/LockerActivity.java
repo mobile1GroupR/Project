@@ -1,12 +1,17 @@
 package com.example.mobilelocker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,6 +46,8 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     String currentSymbols;
 
     boolean changePassword = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +85,40 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         String s = save.getString(PASSWORD, "");
         Log.i("LOG", "CURRENT PASSWORD: " + s);
 
-        changePassword = getIntent().getBooleanExtra(ENTER_CHANGE_PASSWORD, false);
 
+        clear();
         shuffle();
 
     }
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
+        super.onUserInteraction();
+
+        clear();
+        shuffle();
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+
+
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
+
+    }
+
 
     public void shuffle() {
         currentSymbols = save.getString(SYMBOLS, CurrentSymbols.greekSymbols);
