@@ -9,15 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class SetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class CheckPasswordBeforeChange extends AppCompatActivity implements View.OnClickListener {
 
     public static final String SAVE = "SAVE";
-    public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
+    public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
     public static final String CONFIRM_PASSWORD = "CONFIRM_PASSWORD";
+
     private Button btn1;
     private Button btn2;
     private Button btn3;
@@ -27,21 +30,18 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
     private Button btn7;
     private Button btn8;
     private Button btn9;
-
-    TextView passwordView;
-    String inputPassword;
-
-    Button btnConfirm;
-    Button btnClear;
+    private TextView tvInput;
 
     SharedPreferences save;
 
+    private String inputPassword;
     String currentSymbols;
+    String confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_password);
+        setContentView(R.layout.activity_check_password_before_change);
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
@@ -52,55 +52,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
 
-        inputPassword ="";
-        passwordView = findViewById(R.id.showPasswordView);
 
-        btnClear = findViewById(R.id.btnClear);
-        btnConfirm = findViewById(R.id.btnConfirmPassword);
-
-        save =getSharedPreferences(SAVE,MODE_PRIVATE);
-
-        Log.i("LOG","CURRENT PASSWORD: "+save.getString("PASSWORD",""));
-
-        setBtns();
-    }
-    public void btnConfirmClick(View view){
-        if (inputPassword.length()==Password.length){
-            Log.i("LOG","Btn Confirm clicked. CurrentPassword: "+inputPassword);
-
-            Intent intent = new Intent(this,ConfirmPasswordCreation.class);
-            intent.putExtra(CONFIRM_PASSWORD,inputPassword);
-            startActivity(intent);
-        }
-        else{
-            Log.i("LOG","Btn Confirm clicked. Password not saved. CurrentPassword: " + inputPassword);
-        }
-
-    }
-
-    public void btnClearClick(View view){
-
-        inputPassword ="";
-        passwordView.setText("");
-        Log.i("LOG","Btn Clear clicked. CurrentPassword: "+inputPassword);
-    }
-    public void setBtns(){
-        currentSymbols = save.getString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols);
-        ArrayList s = new ArrayList();
-        for (int i=0;i<currentSymbols.length();i++){
-            s.add(currentSymbols.charAt(i)+"");
-        }
-        Log.i("LOG",s.toString());
-
-        btn1.setText(s.get(0).toString());
-        btn2.setText(s.get(1).toString());
-        btn3.setText(s.get(2).toString());
-        btn4.setText(s.get(3).toString());
-        btn5.setText(s.get(4).toString());
-        btn6.setText(s.get(5).toString());
-        btn7.setText(s.get(6).toString());
-        btn8.setText(s.get(7).toString());
-        btn9.setText(s.get(8).toString());
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
@@ -111,6 +63,52 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         btn8.setOnClickListener(this);
         btn9.setOnClickListener(this);
 
+        tvInput = findViewById(R.id.lockerActivityInputTextView);
+        inputPassword="";
+
+        save  = getSharedPreferences(SAVE,MODE_PRIVATE);
+        confirmPassword = getIntent().getStringExtra(CONFIRM_PASSWORD);
+        Log.i("LOG","CONFIRM PASSWORD, CURRENT PASSWORD: "+confirmPassword);
+
+        shuffle();
+    }
+    public void shuffle(){
+        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+        ArrayList s = new ArrayList();
+        for (int i=0;i<currentSymbols.length();i++){
+            s.add(currentSymbols.charAt(i)+"");
+        }
+        Log.i("LOG",s.toString());
+        Collections.shuffle(s);
+        Log.i("LOG", s.toString());
+
+        btn1.setText(s.get(0).toString());
+        btn2.setText(s.get(1).toString());
+        btn3.setText(s.get(2).toString());
+        btn4.setText(s.get(3).toString());
+        btn5.setText(s.get(4).toString());
+        btn6.setText(s.get(5).toString());
+        btn7.setText(s.get(6).toString());
+        btn8.setText(s.get(7).toString());
+        btn9.setText(s.get(8).toString());
+    }
+
+    public void checkPassword(){
+        if (inputPassword.compareTo(save.getString(PASSWORD, "")) == 0){
+            Log.i("LOG", "Correct Password ");
+            Intent intent = new Intent(this,ChooseSymbols.class);
+            startActivity(intent);
+        }
+        else{
+            Log.i("LOG", "Incorrect Password ");
+            Toast.makeText(this, "Incorrect Password. Try again.", Toast.LENGTH_SHORT).show();
+            clear();
+
+        }
+    }
+    public void clear(){
+        inputPassword="";
+        tvInput.setText("");
     }
 
     @Override
@@ -146,6 +144,10 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        passwordView.setText(inputPassword);
+        tvInput.append("●");
+        if (inputPassword.length()==Password.length){
+            checkPassword();
+        }
+
     }
 }

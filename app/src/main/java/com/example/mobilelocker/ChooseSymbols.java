@@ -15,6 +15,7 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
 
     public static final String SAVE = "SAVE";
     public static final String SYMBOLS = "SYMBOLS";
+    public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
     private Button btnChooseGreek;
     private Button btnChooseChessandcard;
 
@@ -49,18 +50,18 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor editor =  save.edit();
         switch (id){
             case 0:
-                editor.putString(SYMBOLS,CurrentSymbols.greekSymbols);
+                editor.putString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols);
                 editor.commit();
                 break;
             case 1:
-                editor.putString(SYMBOLS,CurrentSymbols.chessandcardSymbols);
+                editor.putString(TEMPORARY_SYMBOLS,CurrentSymbols.chessandcardSymbols);
                 editor.commit();
                 break;
             default:
                 Log.i("LOG","Invalid Id");
                     return;
         }
-        Log.i("LOG","Btn Choose clicked. Current symbols: " + save.getString(SYMBOLS,""));
+        Log.i("LOG","Btn Choose clicked. Current symbols: " + save.getString(TEMPORARY_SYMBOLS,""));
 
         Intent intent = new Intent(this,SetPasswordActivity.class);
         startActivity(intent);

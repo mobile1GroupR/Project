@@ -20,11 +20,9 @@ import java.net.URISyntaxException;
 import java.util.concurrent.locks.Lock;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String ENTER_CHANGE_PASSWORD = "ENTER_CHANGE_PASSWORD";
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
 
-    BootReceiver b = new BootReceiver();
     //https://coolsymbol.com/
     SharedPreferences save;
     @Override
@@ -45,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(this,LockerActivity.class);
-            intent.putExtra(ENTER_CHANGE_PASSWORD,true);
+            Intent intent = new Intent(this,CheckPasswordBeforeChange.class);
             startActivity(intent);
         }
     }

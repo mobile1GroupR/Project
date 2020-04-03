@@ -19,6 +19,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
     public static final String SAVE = "SAVE";
     public static final String PASSWORD = "PASSWORD";
     public static final String SYMBOLS = "SYMBOLS";
+    public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
     public static final String CONFIRM_PASSWORD = "CONFIRM_PASSWORD";
 
     private Button btn1;
@@ -74,7 +75,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
     }
 
     public void shuffle(){
-        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+        currentSymbols = save.getString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols);
         ArrayList s = new ArrayList();
         for (int i=0;i<currentSymbols.length();i++){
             s.add(currentSymbols.charAt(i)+"");
@@ -99,6 +100,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
             Log.i("LOG", "Correct Password ");
             SharedPreferences.Editor editor = save.edit();
             editor.putString(PASSWORD,confirmPassword);
+            editor.putString(SYMBOLS,save.getString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols));
             editor.commit();
             Password.hasPassword=true;
             Intent intent = new Intent(this,MainActivity.class);
