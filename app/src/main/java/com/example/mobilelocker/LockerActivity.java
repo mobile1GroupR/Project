@@ -17,9 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.security.auth.login.LoginException;
 
 
 public class LockerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,6 +47,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     private Button btn9;
     private TextView tvInput;
 
+    private TextView hoursAndMins;
     SharedPreferences save;
 
     private String inputPassword;
@@ -81,15 +89,31 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         tvInput = findViewById(R.id.lockerActivityInputTextView);
         inputPassword = "";
 
+        hoursAndMins = findViewById(R.id.hoursAndMinsTextView);
+
         save = getSharedPreferences(SAVE, MODE_PRIVATE);
         String s = save.getString(PASSWORD, "");
         Log.i("LOG", "CURRENT PASSWORD: " + s);
 
-
+        getHoursAndMins();
         clear();
         shuffle();
 
     }
+
+    public void getHoursAndMins(){
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
+        hoursAndMins.setText(date);
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        getHoursAndMins();
+                    }
+                }, 1000);
+    }
+
+
     @Override
     protected void onResume() {
 
@@ -106,9 +130,6 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
     }
-
-
-
 
     @Override
     public void onUserInteraction() {
