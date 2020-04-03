@@ -6,20 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".ChooseSymbols">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:text="Choose Symbols Set"
+        android:textAlignment="center"
+        android:textColor="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_begin="242dp" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7">
+        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,13 +46,25 @@
                 android:id="@+id/btnSetGreek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Greek Symbols" />
+                android:text="Greek Letters" />
 
             <Button
                 android:id="@+id/btnSetChessandcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chess and Cards Symbols" />
+                android:text="Chess and Cards " />
+
+            <Button
+                android:id="@+id/btnSetLatinNumbersSymbols"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Latin Numbers" />
+
+            <Button
+                android:id="@+id/btnSetNumberSymbols"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Numbers" />
         </LinearLayout>
     </ScrollView>
 
@@ -44,20 +72,35 @@
         android:id="@+id/chooseSymbols_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="36sp"
         android:gravity="right|center_vertical"
+        android:letterSpacing="0.4"
+        android:maxLines="1"
+        app:autoSizeMaxTextSize="100sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose"
         android:onClick="btnChooseClick"
+        android:text="Choose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 </androidx.constraintlayout.widget.ConstraintLayout>

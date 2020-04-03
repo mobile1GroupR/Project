@@ -18,7 +18,8 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
     public static final String TEMPORARY_SYMBOLS = "TEMPORARY_SYMBOLS";
     private Button btnChooseGreek;
     private Button btnChooseChessandcard;
-
+    private Button btnChooseLatinNumbers;
+    private Button btnChooseNumbers;
     private TextView tv;
 
     private int id=0;
@@ -38,6 +39,10 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
         btnChooseGreek.setOnClickListener(this);
         btnChooseChessandcard = findViewById(R.id.btnSetChessandcard);
         btnChooseChessandcard.setOnClickListener(this);
+        btnChooseLatinNumbers = findViewById(R.id.btnSetLatinNumbersSymbols);
+        btnChooseLatinNumbers.setOnClickListener(this);
+        btnChooseNumbers = findViewById(R.id.btnSetNumberSymbols);
+        btnChooseNumbers.setOnClickListener(this);
 
     }
 
@@ -50,11 +55,19 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor editor =  save.edit();
         switch (id){
             case 0:
-                editor.putString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols);
+                editor.putString(TEMPORARY_SYMBOLS, Symbols.greekSymbols);
                 editor.commit();
                 break;
             case 1:
-                editor.putString(TEMPORARY_SYMBOLS,CurrentSymbols.chessandcardSymbols);
+                editor.putString(TEMPORARY_SYMBOLS, Symbols.chessandcardSymbols);
+                editor.commit();
+                break;
+            case 2:
+                editor.putString(TEMPORARY_SYMBOLS, Symbols.latinNumbers);
+                editor.commit();
+                break;
+            case 3:
+                editor.putString(TEMPORARY_SYMBOLS, Symbols.numbers);
                 editor.commit();
                 break;
             default:
@@ -72,12 +85,20 @@ public class ChooseSymbols extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnSetGreek:
-                tv.setText(CurrentSymbols.greekSymbols);
+                tv.setText(Symbols.greekSymbols);
                 id = 0;
                 break;
             case R.id.btnSetChessandcard:
                 id=1;
-                tv.setText(CurrentSymbols.chessandcardSymbols);
+                tv.setText(Symbols.chessandcardSymbols);
+                break;
+            case R.id.btnSetLatinNumbersSymbols:
+                id=2;
+                tv.setText(Symbols.latinNumbers);
+                break;
+            case R.id.btnSetNumberSymbols:
+                id=3;
+                tv.setText(Symbols.numbers);
                 break;
         }
     }

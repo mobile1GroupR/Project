@@ -73,7 +73,7 @@ public class CheckPasswordBeforeChange extends AppCompatActivity implements View
         shuffle();
     }
     public void shuffle(){
-        currentSymbols = save.getString(SYMBOLS,CurrentSymbols.greekSymbols);
+        currentSymbols = save.getString(SYMBOLS, Symbols.greekSymbols);
         ArrayList s = new ArrayList();
         for (int i=0;i<currentSymbols.length();i++){
             s.add(currentSymbols.charAt(i)+"");

@@ -1,32 +1,20 @@
 package com.example.mobilelocker;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.security.auth.login.LoginException;
 
 
 public class LockerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -151,7 +139,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
 
     public void shuffle() {
-        currentSymbols = save.getString(SYMBOLS, CurrentSymbols.greekSymbols);
+        currentSymbols = save.getString(SYMBOLS, Symbols.greekSymbols);
         ArrayList s = new ArrayList();
         for (int i = 0; i < currentSymbols.length(); i++) {
             s.add(currentSymbols.charAt(i) + "");

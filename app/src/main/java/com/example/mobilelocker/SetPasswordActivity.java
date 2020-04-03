@@ -85,7 +85,7 @@ public class SetPasswordActivity extends AppCompatActivity implements View.OnCli
         Log.i("LOG","Btn Clear clicked. CurrentPassword: "+inputPassword);
     }
     public void setBtns(){
-        currentSymbols = save.getString(TEMPORARY_SYMBOLS,CurrentSymbols.greekSymbols);
+        currentSymbols = save.getString(TEMPORARY_SYMBOLS, Symbols.greekSymbols);
         ArrayList s = new ArrayList();
         for (int i=0;i<currentSymbols.length();i++){
             s.add(currentSymbols.charAt(i)+"");
