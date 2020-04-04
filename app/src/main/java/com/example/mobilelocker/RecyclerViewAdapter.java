@@ -53,37 +53,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-
+        holder.setIsRecyclable(false);
         loadData();
         holder.name.setText(appsInfo.get(position).getName());
         for (String s : blockedApps) {
             App.names.add(s);
         }
         if (blockedApps.contains(appsInfo.get(position).getPackageName())) {
-            Log.i("BLOCKED APPS", appsInfo.get(position).getPackageName());
-            holder.name.setTextColor(Color.rgb(200, 0, 0));
+          //  holder.name.setTextColor(Color.rgb(200, 0, 0));
+            holder.layout.setBackgroundColor(Color.rgb(200,0,0));
         }
-        Log.i("TEST4", "A.names: " + App.names.toString());
-        Log.i("TEST4", "Blocked Apps:" + blockedApps.toString());
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
 
-                if (blockedApps.contains(appsInfo.get(position).getPackageName()) || App.names.contains((appsInfo.get(position).getPackageName()))) {
+                if (blockedApps.contains(appsInfo.get(position).getPackageName())) {
                     Log.i(TAG, "REMOVED");
                     App.names.remove(appsInfo.get(position).getPackageName());
                     saveData();
                     loadData();
-                    Log.i("TEST7", App.names.toString());
-                    holder.name.setTextColor(R.color.colorPrimary);
+                    Log.i("BLOCKEDAPPS", "INSIDE: " + appsInfo.get(position).getPackageName());
+                    //holder.name.setTextColor(R.color.colorPrimary);
+                    holder.layout.setBackgroundColor(R.color.white);
 
                 } else {
                     Log.i(TAG, "onClick Added: " + position);
                     App.names.add(appsInfo.get(position).getPackageName());
                     saveData();
-                    Log.i("TEST7", App.names.toString());
-                    holder.name.setTextColor(Color.rgb(200, 0, 0));
+                    Log.i("BLOCKEDAPPS", "ELSE "+ holder.name.toString());
+                   // holder.name.setTextColor(Color.rgb(200, 0, 0));
+                    holder.layout.setBackgroundColor(Color.rgb(200,0,0));
                 }
 
                 mContext.stopService(new Intent(mContext, AppListenerService.class));

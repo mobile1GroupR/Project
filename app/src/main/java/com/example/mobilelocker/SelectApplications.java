@@ -57,9 +57,9 @@ public class SelectApplications extends AppCompatActivity {
             PackageInfo p = packs.get(i);
             ApplicationInfo a = p.applicationInfo;
             // skip system apps if they shall not be included
-            if ((a.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
+            /*if ((a.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
                 continue;
-            }
+            }*/
             String appname = (String) getPackageManager().getApplicationLabel(p.applicationInfo);
             appsNames.add(appname);
             appsInfo.add(new AppInfo(appname,p.packageName));
