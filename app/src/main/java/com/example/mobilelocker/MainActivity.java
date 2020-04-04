@@ -3,31 +3,16 @@ package com.example.mobilelocker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AppOpsManager;
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
-
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "LOG";
@@ -53,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Intent service2 = new Intent(getApplicationContext(), AppListenerService.class);
         getApplicationContext().startService(service2);
+        //TEST
 
 
 

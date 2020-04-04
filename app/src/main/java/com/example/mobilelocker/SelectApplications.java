@@ -4,36 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActivityManager;
-import android.app.AppOpsManager;
-import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class SelectApplications extends AppCompatActivity {
 
     private static final String TAG = "LOG";
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> imgs = new ArrayList<>();
+    ArrayList<AppInfo> appsInfo = new ArrayList<>();
 
     
     List<PackageInfo> packs;
     List<ResolveInfo> appList;
-    List apps;
+    ArrayList<String> appsNames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +36,10 @@ public class SelectApplications extends AppCompatActivity {
     }
 
 
+
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(names,imgs,this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,appsInfo);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -59,7 +52,7 @@ public class SelectApplications extends AppCompatActivity {
         appList = packageManager.queryIntentActivities(mainIntent, 0);
         //Collections.sort(appList, new ResolveInfo.DisplayNameComparator(packageManager));
         packs = packageManager.getInstalledPackages(0);
-        apps = new ArrayList();
+        appsNames = new ArrayList<>();
         for (int i = 0; i < packs.size(); i++) {
             PackageInfo p = packs.get(i);
             ApplicationInfo a = p.applicationInfo;
@@ -67,11 +60,11 @@ public class SelectApplications extends AppCompatActivity {
             if ((a.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
                 continue;
             }
-            names.add(p.packageName);
-
+            String appname = (String) getPackageManager().getApplicationLabel(p.applicationInfo);
+            appsNames.add(appname);
+            appsInfo.add(new AppInfo(appname,p.packageName));
         }
-        Log.i("LOGCHECK", appList.toString());
-        Log.i("LOGCHECK", names.toString());
+        Log.i("TEST", appList.toString());
 
     }
 }

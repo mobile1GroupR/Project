@@ -11,6 +11,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,11 +27,11 @@ import java.util.TreeMap;
 public class AppListenerService extends Service {
     private static final String TAG = "RUN";
     public static final String HOME_PAGE = "com.google.android.apps.nexuslauncher";
-    public static final String BLOCKED_APPS = "BLOCKED_APPS";
+    public static final String BLOCKED_APPS_ARRAY = "BLOCKED_APPS_ARRAY";
     public static final String SAVE = "SAVE";
     String currentApp="";
 
-    Set blockedApps;
+    ArrayList<String> blockedApps;
     SharedPreferences save;
     Context mContext;
 
@@ -38,14 +43,28 @@ public class AppListenerService extends Service {
         super.onCreate();
         save = this.getSharedPreferences(SAVE,MODE_PRIVATE);
         Log.i(TAG, "onCreate: APP_LISTENER_SERVICE");
-        blockedApps = save.getStringSet(BLOCKED_APPS,new HashSet<String>());
+        loadData();
         startTimer();
     }
 
+    private void loadData(){
+        Gson gson = new Gson();
+        String json = save.getString(BLOCKED_APPS_ARRAY,"");
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        blockedApps = gson.fromJson(json,type);
+
+        if (blockedApps==null){
+            blockedApps = new ArrayList<>();
+        }
+        Log.i("TEST8", blockedApps.toString());
+
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("SERVICE", "onCreate() , service stopped...");
+        loadData();
+        stopTimerTask();
+        Log.i("SERVICE", "onDestroy() , service stopped...");
     }
 
 
@@ -64,8 +83,9 @@ public class AppListenerService extends Service {
 
             @Override
             public void run() {
+                //Log.i("DELETE", blockedApps.toString());
                 currentApp = getCurrentApp();
-                Log.i("CURRENT_APP", "run: " + currentApp);
+               // Log.i("CURRENT_APP", "run: " + currentApp);
                 if (blockedApps.contains(currentApp) && !unlocked){
                     unlocked = true;
                     Intent intent = new Intent(getApplicationContext(),LockerActivity.class);
@@ -83,6 +103,12 @@ public class AppListenerService extends Service {
             }
         };
         timer.schedule(timerTask,0,800);
+    }
+
+    public void stopTimerTask(){
+        if (timer!=null)
+            timer.cancel();
+            timer=null;
     }
 
     private String getCurrentApp(){

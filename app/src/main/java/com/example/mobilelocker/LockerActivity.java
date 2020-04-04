@@ -137,10 +137,10 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     protected void onResume() {
 
         super.onResume();
-        View decorView = getWindow().getDecorView();
+       /* View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
-        super.onUserInteraction();
+        super.onUserInteraction();*/
 
         clear();
         shuffle();
@@ -150,7 +150,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public void onBackPressed() {
     }
 
-    @Override
+   /* @Override
     public void onUserInteraction() {
         super.onUserInteraction();
         View decorView = getWindow().getDecorView();
@@ -158,7 +158,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         decorView.setSystemUiVisibility(uiOptions);
 
     }
-
+*/
 
     public void shuffle() {
         currentSymbols = save.getString(SYMBOLS, Symbols.greekSymbols);
