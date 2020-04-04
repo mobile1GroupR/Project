@@ -90,6 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mContext.stopService(new Intent(mContext, AppListenerService.class));
                 Intent service2 = new Intent(mContext, AppListenerService.class);
                 mContext.startService(service2);
+                onBindViewHolder(holder,position);
             }
         });
     }
