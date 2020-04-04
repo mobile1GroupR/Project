@@ -2,11 +2,16 @@ package com.example.mobilelocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +54,20 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
+        {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            if(keyguardManager!=null)
+                keyguardManager.requestDismissKeyguard(this, null);
+        }
+        else
+        {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locker);
 
@@ -89,6 +108,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         shuffle();
 
     }
+
 
     public void setTime(){
         new android.os.Handler().postDelayed(
@@ -164,13 +184,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public void checkPassword() {
         if (inputPassword.compareTo(save.getString(PASSWORD, "")) == 0) {
             Log.i("LOG", "Correct Password ");
-            if (changePassword) {
-                Intent intent = new Intent(this,ChooseSymbols.class);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
+            finish();
         } else {
             Log.i("LOG", "Incorrect Password ");
             Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();

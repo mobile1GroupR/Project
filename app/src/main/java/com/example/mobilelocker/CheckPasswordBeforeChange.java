@@ -69,7 +69,7 @@ public class CheckPasswordBeforeChange extends AppCompatActivity implements View
 
         save  = getSharedPreferences(SAVE,MODE_PRIVATE);
         confirmPassword = getIntent().getStringExtra(CONFIRM_PASSWORD);
-        Log.i("LOG","CONFIRM PASSWORD, CURRENT PASSWORD: "+confirmPassword);
+        Log.i("LOG","CHECK PASSWORD, CURRENT PASSWORD: "+save.getString(PASSWORD,""));
 
         shuffle();
     }

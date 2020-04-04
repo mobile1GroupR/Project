@@ -18,5 +18,6 @@ public class BootReceiver extends BroadcastReceiver {
             context.startActivity(intent2);
         }
 
+
     }
 }

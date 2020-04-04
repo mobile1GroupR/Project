@@ -71,7 +71,7 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
 
         save  = getSharedPreferences(SAVE,MODE_PRIVATE);
         confirmPassword = getIntent().getStringExtra(CONFIRM_PASSWORD);
-        Log.i("LOG","CONFIRM PASSWORD, CURRENT PASSWORD: "+confirmPassword);
+        Log.i("LOG","CONFIRM PASSWORD, CURRENT PASSWORD: "+save.getString(PASSWORD,""));
 
         shuffle();
     }
@@ -105,6 +105,9 @@ public class ConfirmPasswordCreation extends AppCompatActivity implements View.O
             editor.putString(SYMBOLS,save.getString(TEMPORARY_SYMBOLS, Symbols.greekSymbols));
             editor.commit();
             Password.hasPassword=true;
+
+           // Intent service = new Intent(getApplicationContext(), ScreenListenerService.class);
+           // getApplicationContext().startService(service);
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }

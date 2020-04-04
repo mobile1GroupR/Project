@@ -27,9 +27,9 @@ public class ScreenListenerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i("LOG", "onDestroy: ScreenListenerService");
         if (br!=null){
-            unregisterReceiver(br);
-            Log.i("LOG", "onDestroy: ScreenListenerService");
+           // unregisterReceiver(br);
         }
     }
 
