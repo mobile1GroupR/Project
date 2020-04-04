@@ -184,6 +184,8 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     public void checkPassword() {
         if (inputPassword.compareTo(save.getString(PASSWORD, "")) == 0) {
             Log.i("LOG", "Correct Password ");
+            Toast.makeText(this, "Correct Password", Toast.LENGTH_SHORT).show();
+
             finish();
         } else {
             Log.i("LOG", "Incorrect Password ");

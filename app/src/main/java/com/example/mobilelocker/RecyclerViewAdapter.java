@@ -48,25 +48,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        //Log.i(TAG, "onBindViewHolder: called");
-
 
         final Set blockedApps = save.getStringSet(BLOCKED_APPS,new HashSet<String>());
         holder.name.setText(names.get(position));
         if(blockedApps.contains(names.get(position))){
-            Log.i(TAG, "onBindViewHolder: POAOSPDOP");
             holder.name.setTextColor(Color.rgb(200,0,0));
         }
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(blockedApps.contains(names.get(position)))   {
+                    if(blockedApps.contains(names.get(position)) || App.names.contains((names.get(position))))   {
                         Log.i(TAG, "NOT ADDED");
                         return;
                     }
                     Log.i(TAG, "onClick Added: " + position);
                     App.names.add(names.get(position));
-                    //TODO FIX BUG WITH MULTIPLE SERVICE CALL
                     SharedPreferences.Editor editor = save.edit();
                     editor.putStringSet(BLOCKED_APPS, App.names);
                     editor.apply();

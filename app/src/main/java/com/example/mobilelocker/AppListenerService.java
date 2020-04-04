@@ -37,11 +37,16 @@ public class AppListenerService extends Service {
     public void onCreate() {
         super.onCreate();
         save = this.getSharedPreferences(SAVE,MODE_PRIVATE);
-        Log.i(TAG, "onCreate: APPLISTENERSERVICE");
+        Log.i(TAG, "onCreate: APP_LISTENER_SERVICE");
         blockedApps = save.getStringSet(BLOCKED_APPS,new HashSet<String>());
         startTimer();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("SERVICE", "onCreate() , service stopped...");
+    }
 
 
     @Nullable
@@ -61,17 +66,11 @@ public class AppListenerService extends Service {
             public void run() {
                 currentApp = getCurrentApp();
                 Log.i("CURRENT_APP", "run: " + currentApp);
-            /*    for (String s: App.names) {
-                    if (currentApp.compareTo(s)==0 && unlocked){
-                        Intent intent = new Intent(getApplicationContext(),LockerActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                }*/
                 if (blockedApps.contains(currentApp) && !unlocked){
                     unlocked = true;
                     Intent intent = new Intent(getApplicationContext(),LockerActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
                 if (HOME_PAGE.compareTo(currentApp)==0){
@@ -91,10 +90,8 @@ public class AppListenerService extends Service {
         UsageStatsManager usm = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
         long time = System.currentTimeMillis();
 
-// We get usage stats for the last 10 seconds
         List<UsageStats> stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000*1000, time);
 
-// Sort the stats by the last time used
         if(stats != null) {
             SortedMap<Long,UsageStats> mySortedMap = new TreeMap<>();
             for (UsageStats usageStats : stats) {

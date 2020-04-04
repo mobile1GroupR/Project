@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectApplications" />
-        <activity android:name=".CheckPasswordBeforeChange" />
+        <activity android:name=".SelectApplications" android:launchMode="singleInstance"/>
+        <activity android:name=".CheckPasswordBeforeChange" android:launchMode="singleInstance"/>
 
         <service
             android:name=".ScreenListenerService"
@@ -28,13 +28,13 @@
             android:permission="TODO"
             tools:ignore="ExportedService" />
 
-        <activity android:name=".ConfirmPasswordCreation" />
-        <activity android:name=".SetPasswordActivity" />
-        <activity android:name=".ChooseSymbols" />
+        <activity android:name=".ConfirmPasswordCreation" android:launchMode="singleInstance"/>
+        <activity android:name=".SetPasswordActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".ChooseSymbols" android:launchMode="singleInstance"/>
         <activity
             android:name=".LockerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

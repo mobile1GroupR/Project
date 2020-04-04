@@ -44,16 +44,20 @@ public class MainActivity extends AppCompatActivity {
         save = getSharedPreferences(SAVE,MODE_PRIVATE);
         Log.i("LOG","CURRENT PASSWORD: " + save.getString(PASSWORD,""));
 
-        getPermission();
         Log.i(TAG, "GET PERMISSION: " + getPermission());
+        if (getPermission()){
+            Toast.makeText(this, "Allow this app to have an access to user statistics.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
 
-        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-        startActivity(intent);
+        }
         Intent service2 = new Intent(getApplicationContext(), AppListenerService.class);
         getApplicationContext().startService(service2);
 
 
+
     }
+
     public boolean getPermission(){
 
         try {
