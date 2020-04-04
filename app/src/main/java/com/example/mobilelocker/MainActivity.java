@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -43,15 +44,6 @@ public class MainActivity extends AppCompatActivity {
         save = getSharedPreferences(SAVE,MODE_PRIVATE);
         Log.i("LOG","CURRENT PASSWORD: " + save.getString(PASSWORD,""));
 
-       /* final PackageManager pm = getPackageManager();
-        //get a list of installed apps.
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        for (ApplicationInfo packageInfo : packages) {
-            Log.d("APPS", "Installed package :" + packageInfo.packageName);
-            Log.d("APPS", "Source dir : " + packageInfo.sourceDir);
-            Log.d("APPS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-        }*/
         getPermission();
         Log.i(TAG, "GET PERMISSION: " + getPermission());
 
@@ -89,8 +81,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void lockerClick(View view){
-        Intent intent = new Intent(this, SelectApplications.class);
-        startActivity(intent);
+        if (save.getString(PASSWORD,"").equals("")){
+            Toast.makeText(this, "First Create Password", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Intent intent = new Intent(this, SelectApplications.class);
+            startActivity(intent);
+        }
+
     }
 
     @Override

@@ -5,21 +5,30 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
 public class AppListenerService extends Service {
-    private static final String TAG = "LOG";
+    private static final String TAG = "RUN";
     public static final String HOME_PAGE = "com.google.android.apps.nexuslauncher";
-    String currentApp;
+    public static final String BLOCKED_APPS = "BLOCKED_APPS";
+    public static final String SAVE = "SAVE";
+    String currentApp="";
+
+    Set blockedApps;
+    SharedPreferences save;
+    Context mContext;
 
     public AppListenerService() {
     }
@@ -27,7 +36,9 @@ public class AppListenerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        save = this.getSharedPreferences(SAVE,MODE_PRIVATE);
         Log.i(TAG, "onCreate: APPLISTENERSERVICE");
+        blockedApps = save.getStringSet(BLOCKED_APPS,new HashSet<String>());
         startTimer();
     }
 
@@ -57,16 +68,18 @@ public class AppListenerService extends Service {
                         startActivity(intent);
                     }
                 }*/
-                if (App.names.contains(currentApp) && !unlocked){
+                if (blockedApps.contains(currentApp) && !unlocked){
                     unlocked = true;
                     Intent intent = new Intent(getApplicationContext(),LockerActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
-                if (currentApp.compareTo(HOME_PAGE)==0){
+                if (HOME_PAGE.compareTo(currentApp)==0){
                     unlocked = false;
                 }
                 Log.i(TAG, unlocked+"");
+
+                Log.i(TAG, blockedApps.toString());
 
             }
         };
@@ -74,7 +87,7 @@ public class AppListenerService extends Service {
     }
 
     private String getCurrentApp(){
-        String s = null;
+        String s = "";
         UsageStatsManager usm = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
         long time = System.currentTimeMillis();
 

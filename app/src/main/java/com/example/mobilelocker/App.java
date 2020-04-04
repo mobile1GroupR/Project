@@ -1,7 +1,8 @@
 package com.example.mobilelocker;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class App {
-    public static ArrayList<String> names = new ArrayList<>();
+    public static Set<String> names = new HashSet<>();
 }

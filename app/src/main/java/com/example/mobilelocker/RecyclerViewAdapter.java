@@ -1,6 +1,8 @@
 package com.example.mobilelocker;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +17,25 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "LOG";
+    public static final String BLOCKED_APPS = "BLOCKED_APPS";
+    public static final String SAVE = "SAVE";
 
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> imgs = new ArrayList<>();
     private Context mContext;
 
+    SharedPreferences save ;
+
     public RecyclerViewAdapter(ArrayList<String> names, ArrayList<String> imgs, Context mContext) {
         this.names = names;
         this.imgs = imgs;
         this.mContext = mContext;
+        save = mContext.getSharedPreferences(SAVE,Context.MODE_PRIVATE);
     }
 
     @NonNull
@@ -42,18 +51,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //Log.i(TAG, "onBindViewHolder: called");
 
 
+        final Set blockedApps = save.getStringSet(BLOCKED_APPS,new HashSet<String>());
         holder.name.setText(names.get(position));
-        if(App.names.contains(names.get(position))){
+        if(blockedApps.contains(names.get(position))){
+            Log.i(TAG, "onBindViewHolder: POAOSPDOP");
             holder.name.setTextColor(Color.rgb(200,0,0));
         }
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: " + position);
-                App.names.add(names.get(position));
-                holder.name.setTextColor(Color.rgb(200,0,0));
-            }
-        });
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(blockedApps.contains(names.get(position)))   {
+                        Log.i(TAG, "NOT ADDED");
+                        return;
+                    }
+                    Log.i(TAG, "onClick Added: " + position);
+                    App.names.add(names.get(position));
+                    //TODO FIX BUG WITH MULTIPLE SERVICE CALL
+                    SharedPreferences.Editor editor = save.edit();
+                    editor.putStringSet(BLOCKED_APPS, App.names);
+                    editor.apply();
+                    holder.name.setTextColor(Color.rgb(200,0,0));
+                    mContext.stopService(new Intent(mContext, AppListenerService.class));
+                    Intent service2 = new Intent(mContext, AppListenerService.class);
+                    mContext.startService(service2);
+                }
+            });
     }
 
     @Override
