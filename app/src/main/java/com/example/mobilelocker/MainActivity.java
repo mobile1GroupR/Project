@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "First Create Password", Toast.LENGTH_SHORT).show();
         }
         else{
+            Toast.makeText(this, "Loading Applications Please Wait", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, SelectApplications.class);
             startActivity(intent);
         }
