@@ -71,11 +71,8 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locker);
 
-        //set time
-        hoursAndMins = findViewById(R.id.hoursAndMinsTextView);
-        monthAndDay = findViewById(R.id.monthAndDayTextView);
-        setTime();
-        //set time end
+        //setTime();
+
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
@@ -110,7 +107,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public void setTime(){
+/*    public void setTime(){
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -130,7 +127,7 @@ public class LockerActivity extends AppCompatActivity implements View.OnClickLis
         String date = df.format(Calendar.getInstance().getTime());
         monthAndDay.setText(date);
     }
-
+*/
 
 
     @Override

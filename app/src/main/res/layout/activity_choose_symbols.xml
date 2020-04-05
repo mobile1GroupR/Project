@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
-        android:text="Choose Symbol Set"
+        android:text="@string/ChooseSymbolsActivity_instruction"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,25 +47,25 @@
                 android:id="@+id/btnSetGreek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Greek Letters" />
+                android:text="@string/greek_letters" />
 
             <Button
                 android:id="@+id/btnSetChessandcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chess and Cards " />
+                android:text="@string/chess_and_cards" />
 
             <Button
                 android:id="@+id/btnSetLatinNumbersSymbols"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Latin Numbers" />
+                android:text="@string/latin_numbers" />
 
             <Button
                 android:id="@+id/btnSetNumberSymbols"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Numbers" />
+                android:text="@string/numbers" />
         </LinearLayout>
     </ScrollView>
 

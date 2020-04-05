@@ -171,42 +171,28 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
+        android:letterSpacing="0.9"
         android:text=""
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        android:letterSpacing="0.9"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monthAndDayTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/hoursAndMinsTextView" />
 
     <TextView
         android:id="@+id/hoursAndMinsTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40sp"
-        android:text="@string/time_hh_mm"
+        android:text="@string/LockerActivity_instruction"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="36sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/monthAndDayTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hoursAndMinsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

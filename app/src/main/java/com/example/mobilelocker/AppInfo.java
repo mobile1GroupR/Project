@@ -1,5 +1,6 @@
 package com.example.mobilelocker;
 
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 
 import androidx.annotation.NonNull;
@@ -8,9 +9,9 @@ public class AppInfo {
 
     private String name;
     private String packageName;
-    private Icon icon;
+    private Drawable icon;
 
-    public AppInfo(String name, String packageName, Icon icon) {
+    public AppInfo(String name, String packageName, Drawable icon) {
         this.name = name;
         this.packageName = packageName;
         this.icon = icon;
@@ -31,7 +32,7 @@ public class AppInfo {
     }
 
 
-    public Icon getIcon() {
+    public Drawable getIcon() {
         return icon;
     }
 

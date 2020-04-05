@@ -10,4 +10,15 @@
     <string name="greek7">γ</string>
     <string name="greek8">μ</string>
     <string name="greek9">δ</string>
+    <string name="LockerActivity_instruction">Enter Password To Unlock This App</string>
+    <string name="CheckPasswordActivity_intruction">Enter your password</string>
+    <string name="ConfirmPasswordActivity_instruction">Confirm Password</string>
+    <string name="ChooseSymbolsActivity_instruction">Choose Symbol Set</string>
+    <string name="greek_letters">Greek Letters</string>
+    <string name="chess_and_cards">Chess and Cards</string>
+    <string name="latin_numbers">Latin Numbers</string>
+    <string name="numbers">Numbers</string>
+    <string name="SetPasswordActivity_instruction">Set a password 2-6 symbols</string>
+    <string name="block_apps">Block apps</string>
+    <string name="set_password">Set Password</string>
 </resources>

@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -60,9 +61,11 @@ public class SelectApplications extends AppCompatActivity {
             /*if ((a.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
                 continue;
             }*/
+            Drawable icon = getPackageManager().getApplicationIcon(a);
             String appname = (String) getPackageManager().getApplicationLabel(p.applicationInfo);
             appsNames.add(appname);
-            appsInfo.add(new AppInfo(appname,p.packageName));
+
+            appsInfo.add(new AppInfo(appname,p.packageName,icon));
         }
         Log.i("TEST", appList.toString());
 

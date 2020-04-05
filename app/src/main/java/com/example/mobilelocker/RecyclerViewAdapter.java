@@ -51,17 +51,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return holder;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.setIsRecyclable(false);
         loadData();
         holder.name.setText(appsInfo.get(position).getName());
+        holder.img.setImageDrawable(appsInfo.get(position).getIcon());
         for (String s : blockedApps) {
             App.names.add(s);
         }
         if (blockedApps.contains(appsInfo.get(position).getPackageName())) {
           //  holder.name.setTextColor(Color.rgb(200, 0, 0));
             holder.layout.setBackgroundColor(Color.rgb(200,0,0));
+        }
+        else if (position%2==0){
+            holder.layout.setBackgroundColor(Color.rgb(203,206,209));
+        }
+        else{
+            holder.layout.setBackgroundColor(Color.rgb(147,157,187));
         }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +84,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     loadData();
                     Log.i("BLOCKEDAPPS", "INSIDE: " + appsInfo.get(position).getPackageName());
                     //holder.name.setTextColor(R.color.colorPrimary);
-                    holder.layout.setBackgroundColor(R.color.white);
+                    //holder.layout.setBackgroundColor(R.color.white);
 
+                    if (position%2==0){
+                        holder.layout.setBackgroundColor(Color.rgb(93,96,99));
+
+                    }
+                    else{
+                        holder.layout.setBackgroundColor(Color.rgb(72,77,84));
+                    }
                 } else {
                     Log.i(TAG, "onClick Added: " + position);
                     App.names.add(appsInfo.get(position).getPackageName());
